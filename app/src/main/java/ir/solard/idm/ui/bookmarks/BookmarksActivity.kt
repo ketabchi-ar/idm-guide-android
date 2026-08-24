@@ -31,9 +31,9 @@ class BookmarksActivity : AppCompatActivity() {
         }
 
         binding.rvBookmarks.layoutManager = LinearLayoutManager(this)
-        adapter = TopicAdapter(emptyList()) { topic ->
+        adapter = TopicAdapter(emptyList()) { article ->
             val intent = Intent(this, DetailActivity::class.java).apply {
-                putExtra(DetailActivity.EXTRA_TOPIC, topic)
+                putExtra(DetailActivity.EXTRA_ARTICLE, article)
             }
             startActivity(intent)
         }
@@ -47,16 +47,16 @@ class BookmarksActivity : AppCompatActivity() {
 
     private fun loadBookmarks() {
         val bookmarkedIds = prefs.getBookmarks()
-        val allTopics = repo.getAppData().rows
-        val bookmarkedTopics = allTopics.filter { bookmarkedIds.contains(it.id.toString()) }
+        val allArticles = repo.getAllArticles()
+        val bookmarkedArticles = allArticles.filter { bookmarkedIds.contains(it.id.toString()) }
 
-        if (bookmarkedTopics.isEmpty()) {
+        if (bookmarkedArticles.isEmpty()) {
             binding.tvEmptyBookmarks.visibility = View.VISIBLE
             binding.rvBookmarks.visibility = View.GONE
         } else {
             binding.tvEmptyBookmarks.visibility = View.GONE
             binding.rvBookmarks.visibility = View.VISIBLE
-            adapter.updateList(bookmarkedTopics)
+            adapter.updateList(bookmarkedArticles)
         }
     }
 }

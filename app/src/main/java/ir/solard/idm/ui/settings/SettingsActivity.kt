@@ -2,7 +2,8 @@ package ir.solard.idm.ui.settings
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
+import ir.solard.idm.IDMGuideApp
+import ir.solard.idm.R
 import ir.solard.idm.databinding.ActivitySettingsBinding
 import ir.solard.idm.utils.PreferencesManager
 
@@ -22,21 +23,42 @@ class SettingsActivity : AppCompatActivity() {
             finish()
         }
 
-        // Dark mode setup
-        binding.switchDarkMode.isChecked = prefs.isDarkModeEnabled
-        binding.switchDarkMode.setOnCheckedChangeListener { _, isChecked ->
-            prefs.isDarkModeEnabled = isChecked
-            if (isChecked) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-            }
+        setupThemeSelector()
+        setupFontSizeSelector()
+    }
+
+    private fun setupThemeSelector() {
+        when (prefs.themeMode) {
+            "light" -> binding.rbThemeLight.isChecked = true
+            "dark" -> binding.rbThemeDark.isChecked = true
+            else -> binding.rbThemeSystem.isChecked = true
         }
 
-        // Font size setup
-        binding.sliderFontSize.value = prefs.fontSizeScale
+        binding.rgTheme.setOnCheckedChangeListener { _, checkedId ->
+            val selectedMode = when (checkedId) {
+                R.id.rbThemeLight -> "light"
+                R.id.rbThemeDark -> "dark"
+                else -> "system"
+            }
+            if (prefs.themeMode != selectedMode) {
+                prefs.themeMode = selectedMode
+                IDMGuideApp.applyTheme(selectedMode)
+            }
+        }
+    }
+
+    private fun setupFontSizeSelector() {
+        val currentScale = prefs.fontSizeScale
+        binding.sliderFontSize.value = currentScale
+        updateFontPreview(currentScale)
+
         binding.sliderFontSize.addOnChangeListener { _, value, _ ->
             prefs.fontSizeScale = value
+            updateFontPreview(value)
         }
+    }
+
+    private fun updateFontPreview(scale: Float) {
+        binding.tvFontPreview.textSize = 15f * scale
     }
 }

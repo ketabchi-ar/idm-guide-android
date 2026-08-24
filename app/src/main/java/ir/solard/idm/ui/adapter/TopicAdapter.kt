@@ -5,15 +5,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ir.solard.idm.R
-import ir.solard.idm.data.model.TopicItem
+import ir.solard.idm.data.model.ArticleItem
 import ir.solard.idm.databinding.ItemTopicCardBinding
 
 class TopicAdapter(
-    private var items: List<TopicItem>,
-    private val onItemClick: (TopicItem) -> Unit
+    private var items: List<ArticleItem>,
+    private val onItemClick: (ArticleItem) -> Unit
 ) : RecyclerView.Adapter<TopicAdapter.ViewHolder>() {
 
-    fun updateList(newItems: List<TopicItem>) {
+    fun updateList(newItems: List<ArticleItem>) {
         items = newItems
         notifyDataSetChanged()
     }
@@ -36,34 +36,27 @@ class TopicAdapter(
     inner class ViewHolder(private val binding: ItemTopicCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: TopicItem) {
+        fun bind(item: ArticleItem) {
             binding.tvTitle.text = item.title
 
-            val subtitleText = when (item.type) {
-                "showForm" -> "آموزش متنی و تصویری"
-                "showList" -> "شامل بخش‌های زیرمجموعه"
-                "openUrl" -> "ارتباط و لینک"
-                "exit" -> "خروج"
-                else -> null
-            }
-
-            if (subtitleText != null && item.type != "exit") {
-                binding.tvSubtitle.text = subtitleText
+            if (!item.subtitle.isNullOrEmpty()) {
+                binding.tvSubtitle.text = item.subtitle
                 binding.tvSubtitle.visibility = View.VISIBLE
             } else {
                 binding.tvSubtitle.visibility = View.GONE
             }
 
-            // Distinct icons depending on topic
-            when {
-                item.title.contains("معرفی") -> binding.ivIcon.setImageResource(R.drawable.ic_home)
-                item.title.contains("امکانات") -> binding.ivIcon.setImageResource(R.drawable.ic_star)
-                item.title.contains("تنظیم") || item.title.contains("آموزش") -> binding.ivIcon.setImageResource(R.drawable.ic_download)
-                item.title.contains("تماس") -> binding.ivIcon.setImageResource(R.drawable.ic_share)
-                item.title.contains("منابع") -> binding.ivIcon.setImageResource(R.drawable.ic_settings)
-                item.title.contains("خروج") -> binding.ivIcon.setImageResource(R.drawable.ic_exit)
-                else -> binding.ivIcon.setImageResource(R.drawable.ic_download)
+            // Distinct icons depending on category
+            val iconRes = when (item.categoryId) {
+                "intro" -> R.drawable.ic_home
+                "features" -> R.drawable.ic_star
+                "tutorials" -> R.drawable.ic_download
+                "tips" -> R.drawable.ic_settings
+                "shortcuts" -> R.drawable.ic_search
+                "info" -> R.drawable.ic_share
+                else -> R.drawable.ic_download
             }
+            binding.ivIcon.setImageResource(iconRes)
 
             binding.cardTopic.setOnClickListener {
                 onItemClick(item)

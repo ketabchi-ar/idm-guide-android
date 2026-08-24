@@ -3,7 +3,8 @@ package ir.solard.idm.data.repository
 import android.content.Context
 import com.google.gson.Gson
 import ir.solard.idm.data.model.AppData
-import ir.solard.idm.data.model.TopicItem
+import ir.solard.idm.data.model.ArticleItem
+import ir.solard.idm.data.model.CategoryItem
 import java.io.InputStreamReader
 
 class ContentRepository(private val context: Context) {
@@ -23,31 +24,33 @@ class ContentRepository(private val context: Context) {
             data
         } catch (e: Exception) {
             e.printStackTrace()
-            AppData(emptyList())
+            AppData(emptyList(), emptyList())
         }
     }
 
-    fun getTopicById(id: Int): TopicItem? {
-        return getAppData().rows.find { it.id == id }
+    fun getCategories(): List<CategoryItem> {
+        return getAppData().categories
     }
 
-    fun searchTopics(query: String): List<TopicItem> {
+    fun getAllArticles(): List<ArticleItem> {
+        return getAppData().articles
+    }
+
+    fun getArticlesByCategory(categoryId: String): List<ArticleItem> {
+        if (categoryId.isEmpty() || categoryId == "all") {
+            return getAllArticles()
+        }
+        return getAppData().articles.filter { it.categoryId == categoryId }
+    }
+
+    fun searchArticles(query: String): List<ArticleItem> {
         val trimmed = query.trim().lowercase()
-        if (trimmed.isEmpty()) return emptyList()
+        if (trimmed.isEmpty()) return getAllArticles()
 
-        return getAppData().rows.filter { topic ->
-            if (topic.title.lowercase().contains(trimmed)) return@filter true
-            // Search inside steps/pages
-            val hasPageMatch = topic.contentPayload?.pages?.any { it.text.lowercase().contains(trimmed) } ?: false
-            if (hasPageMatch) return@filter true
-
-            // Search inside subrows
-            val hasSubRowMatch = topic.contentPayload?.subRows?.any { subRow ->
-                subRow.title.lowercase().contains(trimmed) ||
-                (subRow.payload?.pages?.any { it.text.lowercase().contains(trimmed) } ?: false)
-            } ?: false
-
-            hasSubRowMatch
+        return getAppData().articles.filter { article ->
+            article.title.lowercase().contains(trimmed) ||
+            (article.subtitle?.lowercase()?.contains(trimmed) ?: false) ||
+            article.steps.any { it.text.lowercase().contains(trimmed) }
         }
     }
 }

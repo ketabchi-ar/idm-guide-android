@@ -5,15 +5,17 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.LayoutInflater
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.chip.Chip
 import ir.solard.idm.R
 import ir.solard.idm.ads.AdManager
-import ir.solard.idm.data.model.TopicItem
+import ir.solard.idm.data.model.ArticleItem
 import ir.solard.idm.data.repository.ContentRepository
 import ir.solard.idm.databinding.ActivityMainBinding
 import ir.solard.idm.ui.adapter.TopicAdapter
@@ -26,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var repository: ContentRepository
     private lateinit var adapter: TopicAdapter
-    private var allTopics: List<TopicItem> = emptyList()
+    private var selectedCategoryId: String = "all"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
@@ -35,10 +37,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         repository = ContentRepository(this)
-        allTopics = repository.getAppData().rows
 
         setupViews()
         setupDrawer()
+        setupCategoryChips()
         setupSearch()
         setupAds()
     }
@@ -49,42 +51,66 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.rvTopics.layoutManager = LinearLayoutManager(this)
-        adapter = TopicAdapter(allTopics) { topic ->
-            handleTopicClick(topic)
+        adapter = TopicAdapter(repository.getAllArticles()) { article ->
+            handleArticleClick(article)
         }
         binding.rvTopics.adapter = adapter
     }
 
-    private fun handleTopicClick(topic: TopicItem) {
-        when (topic.type) {
-            "showForm", "showList" -> {
-                AdManager.showInterstitialAd(this) {
-                    val intent = Intent(this, DetailActivity::class.java).apply {
-                        putExtra(DetailActivity.EXTRA_TOPIC, topic)
+    private fun setupCategoryChips() {
+        binding.chipGroupCategories.removeAllViews()
+
+        // "All" chip
+        val allChip = Chip(this).apply {
+            text = "همه بخش‌ها"
+            isCheckable = true
+            isChecked = true
+            setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    selectedCategoryId = "all"
+                    filterArticles()
+                }
+            }
+        }
+        binding.chipGroupCategories.addView(allChip)
+
+        // Add category chips from data
+        val categories = repository.getCategories()
+        for (category in categories) {
+            val chip = Chip(this).apply {
+                text = category.title
+                isCheckable = true
+                setOnCheckedChangeListener { _, isChecked ->
+                    if (isChecked) {
+                        selectedCategoryId = category.id
+                        filterArticles()
                     }
-                    startActivity(intent)
                 }
             }
-            "openUrl" -> {
-                val url = topic.contentPayload?.url
-                if (!url.isNullOrEmpty()) {
-                    try {
-                        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                        startActivity(browserIntent)
-                    } catch (e: Exception) {
-                        Toast.makeText(this, "امکان باز کردن لینک وجود ندارد", Toast.LENGTH_SHORT).show()
-                    }
-                }
+            binding.chipGroupCategories.addView(chip)
+        }
+    }
+
+    private fun filterArticles() {
+        val query = binding.etSearch.text?.toString().orEmpty()
+        var list = repository.getArticlesByCategory(selectedCategoryId)
+        if (query.isNotBlank()) {
+            val q = query.trim().lowercase()
+            list = list.filter {
+                it.title.lowercase().contains(q) ||
+                (it.subtitle?.lowercase()?.contains(q) ?: false) ||
+                it.steps.any { step -> step.text.lowercase().contains(q) }
             }
-            "exit" -> {
-                showExitDialog()
+        }
+        adapter.updateList(list)
+    }
+
+    private fun handleArticleClick(article: ArticleItem) {
+        AdManager.showInterstitialAd(this) {
+            val intent = Intent(this, DetailActivity::class.java).apply {
+                putExtra(DetailActivity.EXTRA_ARTICLE, article)
             }
-            else -> {
-                val intent = Intent(this, DetailActivity::class.java).apply {
-                    putExtra(DetailActivity.EXTRA_TOPIC, topic)
-                }
-                startActivity(intent)
-            }
+            startActivity(intent)
         }
     }
 
@@ -93,7 +119,9 @@ class MainActivity : AppCompatActivity() {
             binding.drawerLayout.closeDrawer(GravityCompat.START)
             when (menuItem.itemId) {
                 R.id.nav_home -> {
-                    adapter.updateList(allTopics)
+                    selectedCategoryId = "all"
+                    setupCategoryChips()
+                    adapter.updateList(repository.getAllArticles())
                     true
                 }
                 R.id.nav_bookmarks -> {
@@ -141,13 +169,7 @@ class MainActivity : AppCompatActivity() {
         binding.etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val query = s?.toString().orEmpty()
-                if (query.isBlank()) {
-                    adapter.updateList(allTopics)
-                } else {
-                    val filtered = repository.searchTopics(query)
-                    adapter.updateList(filtered)
-                }
+                filterArticles()
             }
             override fun afterTextChanged(s: Editable?) {}
         })

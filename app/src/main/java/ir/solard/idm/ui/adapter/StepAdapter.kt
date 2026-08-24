@@ -11,12 +11,12 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import ir.solard.idm.R
-import ir.solard.idm.data.model.PageStep
+import ir.solard.idm.data.model.StepItem
 import ir.solard.idm.databinding.ItemDetailStepBinding
 import ir.solard.idm.utils.PreferencesManager
 
 class StepAdapter(
-    private val steps: List<PageStep>
+    private val steps: List<StepItem>
 ) : RecyclerView.Adapter<StepAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -37,7 +37,7 @@ class StepAdapter(
     inner class ViewHolder(private val binding: ItemDetailStepBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(step: PageStep) {
+        fun bind(step: StepItem) {
             val context = binding.root.context
             val prefs = PreferencesManager(context)
 

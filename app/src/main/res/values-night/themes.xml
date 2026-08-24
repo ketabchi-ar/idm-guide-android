@@ -10,5 +10,7 @@
         <item name="colorOnSurface">@color/text_primary</item>
         <item name="android:statusBarColor">@color/surface</item>
         <item name="android:windowLightStatusBar">false</item>
+        <item name="fontFamily">@font/vazirmatn</item>
+        <item name="android:fontFamily">@font/vazirmatn</item>
     </style>
 </resources>

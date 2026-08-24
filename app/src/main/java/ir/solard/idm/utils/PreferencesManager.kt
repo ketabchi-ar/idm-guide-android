@@ -8,8 +8,8 @@ class PreferencesManager(context: Context) {
         context.getSharedPreferences("idm_guide_prefs", Context.MODE_PRIVATE)
 
     companion object {
-        private const val KEY_FONT_SIZE = "font_size_scale" // 1.0f, 1.2f, 1.4f
-        private const val KEY_DARK_MODE = "dark_mode_enabled"
+        private const val KEY_FONT_SIZE = "font_size_scale" // 0.8f, 1.0f, 1.2f, 1.4f
+        private const val KEY_THEME_MODE = "theme_mode_setting" // "system", "light", "dark"
         private const val KEY_BOOKMARKS = "saved_bookmarks"
     }
 
@@ -17,9 +17,9 @@ class PreferencesManager(context: Context) {
         get() = prefs.getFloat(KEY_FONT_SIZE, 1.0f)
         set(value) = prefs.edit().putFloat(KEY_FONT_SIZE, value).apply()
 
-    var isDarkModeEnabled: Boolean
-        get() = prefs.getBoolean(KEY_DARK_MODE, false)
-        set(value) = prefs.edit().putBoolean(KEY_DARK_MODE, value).apply()
+    var themeMode: String
+        get() = prefs.getString(KEY_THEME_MODE, "system") ?: "system"
+        set(value) = prefs.edit().putString(KEY_THEME_MODE, value).apply()
 
     fun getBookmarks(): Set<String> {
         return prefs.getStringSet(KEY_BOOKMARKS, emptySet()) ?: emptySet()

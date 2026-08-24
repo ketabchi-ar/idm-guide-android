@@ -10,15 +10,19 @@ class IDMGuideApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        // Initialize Preferences & Dark Mode
         val prefs = PreferencesManager(this)
-        if (prefs.isDarkModeEnabled) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        } else {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-        }
+        applyTheme(prefs.themeMode)
 
-        // Initialize Ads SDK (Tapsell Plus)
         AdManager.initialize(this)
+    }
+
+    companion object {
+        fun applyTheme(themeMode: String) {
+            when (themeMode) {
+                "light" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                "dark" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                else -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            }
+        }
     }
 }
