@@ -32,7 +32,7 @@ object AdManager {
                 }
 
                 override fun onInitializeFailed(adNetworks: AdNetworks, adNetworkError: AdNetworkError) {
-                    Log.e(TAG, "Tapsell init failed: ${adNetworkError.errorMessage}")
+                    Log.e(TAG, "Tapsell init failed: " + adNetworkError.errorMessage)
                     isInitialized = false
                 }
             })
@@ -46,7 +46,7 @@ object AdManager {
             TapsellPlus.requestStandardBannerAd(
                 activity,
                 ZONE_ID_BANNER,
-                TapsellPlusBannerType.BANNER_320_50,
+                TapsellPlusBannerType.BANNER_320x50,
                 object : AdRequestCallback() {
                     override fun response(tapsellPlusAdModel: TapsellPlusAdModel) {
                         super.response(tapsellPlusAdModel)
@@ -62,7 +62,7 @@ object AdManager {
 
                                 override fun onError(tapsellPlusErrorModel: TapsellPlusErrorModel) {
                                     super.onError(tapsellPlusErrorModel)
-                                    Log.e(TAG, "Banner Show Error: ${tapsellPlusErrorModel.errorMessage}")
+                                    Log.e(TAG, "Banner Show Error: " + tapsellPlusErrorModel.errorMessage)
                                 }
                             }
                         )
@@ -70,7 +70,7 @@ object AdManager {
 
                     override fun error(message: String) {
                         super.error(message)
-                        Log.e(TAG, "Banner Request Error: $message")
+                        Log.e(TAG, "Banner Request Error: " + message)
                     }
                 }
             )

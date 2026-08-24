@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import ir.persianweb.idmguide.R
 import ir.persianweb.idmguide.ads.AdManager
-import ir.persianweb.idmguide.data.model.PageStep
 import ir.persianweb.idmguide.data.model.TopicItem
 import ir.persianweb.idmguide.databinding.ActivityDetailBinding
 import ir.persianweb.idmguide.ui.adapter.StepAdapter
@@ -58,7 +57,6 @@ class DetailActivity : AppCompatActivity() {
                 binding.rvDetailSteps.adapter = StepAdapter(pages)
             }
             "showList" -> {
-                // If it contains subRows, convert them into navigable items or sub steps
                 val subRows = topic.contentPayload?.subRows ?: emptyList()
                 val convertedTopics = subRows.map { sub ->
                     TopicItem(
@@ -97,7 +95,6 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setupAds() {
-        // Show Standard Banner at bottom of detail screen
         AdManager.showStandardBanner(this, binding.bannerAdContainerDetail)
     }
 
@@ -120,9 +117,8 @@ class DetailActivity : AppCompatActivity() {
                 true
             }
             R.id.action_share_topic -> {
-                val shareText = "${currentTopic?.title}
-
-راهنمای جامع IDM در کافه بازار"
+                val topicTitle = currentTopic?.title ?: ""
+                val shareText = topicTitle + "\n\nراهنمای جامع IDM در کافه بازار"
                 val sendIntent = Intent().apply {
                     action = Intent.ACTION_SEND
                     putExtra(Intent.EXTRA_TEXT, shareText)
