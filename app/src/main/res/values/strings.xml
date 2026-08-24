@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">راهنمای جامع IDM</string>
+    <string name="nav_home">خانه</string>
+    <string name="nav_bookmarks">علاقه‌مندی‌ها</string>
+    <string name="nav_settings">تنظیمات</string>
+    <string name="nav_about">درباره و تماس</string>
+    <string name="nav_exit">خروج</string>
+
+    <string name="search_hint">جستجو در مباحث و آموزش‌ها...</string>
+    <string name="no_results">موردی یافت نشد!</string>
+    <string name="empty_bookmarks">هنوز موردی به علاقه‌مندی‌ها اضافه نشده است.</string>
+    <string name="share_app">معرفی به دوستان</string>
+    <string name="rate_app">امتیاز به برنامه در بازار</string>
+    <string name="bazaar_package_url">bazaar://details?id=ir.persianweb.idmguide</string>
+
+    <string name="settings_font_size">اندازه قلم متن</string>
+    <string name="settings_dark_mode">حالت شب (Dark Mode)</string>
+    <string name="settings_about_app">درباره این نرم‌افزار</string>
+    <string name="settings_contact">تماس با پشتیبانی</string>
+    <string name="app_version_label">نسخه ۲.۰.۰ - طراحی مدرن</string>
+
+    <string name="copied_to_clipboard">متن در حافظه کپی شد</string>
+    <string name="bookmark_added">به علاقه‌مندی‌ها اضافه شد</string>
+    <string name="bookmark_removed">از علاقه‌مندی‌ها حذف شد</string>
+
+    <string name="dialog_exit_title">خروج از برنامه</string>
+    <string name="dialog_exit_message">آیا مایل به خروج هستید؟</string>
+    <string name="yes">بله</string>
+    <string name="no">خیر</string>
+</resources>

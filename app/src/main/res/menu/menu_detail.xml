@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_bookmark"
+        android:icon="@drawable/ic_bookmark_border"
+        android:title="نشان کردن"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_share_topic"
+        android:icon="@drawable/ic_share"
+        android:title="اشتراک"
+        app:showAsAction="ifRoom" />
+</menu>
