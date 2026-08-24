@@ -1,4 +1,4 @@
-package ir.persianweb.idmguide.data.model
+package ir.solard.idm.data.model
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable

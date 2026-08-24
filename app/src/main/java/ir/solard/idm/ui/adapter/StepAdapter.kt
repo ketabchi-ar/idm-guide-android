@@ -1,4 +1,4 @@
-package ir.persianweb.idmguide.ui.adapter
+package ir.solard.idm.ui.adapter
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -10,10 +10,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import ir.persianweb.idmguide.R
-import ir.persianweb.idmguide.data.model.PageStep
-import ir.persianweb.idmguide.databinding.ItemDetailStepBinding
-import ir.persianweb.idmguide.utils.PreferencesManager
+import ir.solard.idm.R
+import ir.solard.idm.data.model.PageStep
+import ir.solard.idm.databinding.ItemDetailStepBinding
+import ir.solard.idm.utils.PreferencesManager
 
 class StepAdapter(
     private val steps: List<PageStep>

@@ -12,7 +12,7 @@
     <string name="empty_bookmarks">هنوز موردی به علاقه‌مندی‌ها اضافه نشده است.</string>
     <string name="share_app">معرفی به دوستان</string>
     <string name="rate_app">امتیاز به برنامه در بازار</string>
-    <string name="bazaar_package_url">bazaar://details?id=ir.persianweb.idmguide</string>
+    <string name="bazaar_package_url">bazaar://details?id=ir.solard.idm</string>
 
     <string name="settings_font_size">اندازه قلم متن</string>
     <string name="settings_dark_mode">حالت شب (Dark Mode)</string>

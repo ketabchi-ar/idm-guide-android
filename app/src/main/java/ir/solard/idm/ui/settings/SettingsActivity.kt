@@ -1,10 +1,10 @@
-package ir.persianweb.idmguide.ui.settings
+package ir.solard.idm.ui.settings
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import ir.persianweb.idmguide.databinding.ActivitySettingsBinding
-import ir.persianweb.idmguide.utils.PreferencesManager
+import ir.solard.idm.databinding.ActivitySettingsBinding
+import ir.solard.idm.utils.PreferencesManager
 
 class SettingsActivity : AppCompatActivity() {
 

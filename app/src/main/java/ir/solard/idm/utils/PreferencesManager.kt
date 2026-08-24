@@ -1,4 +1,4 @@
-package ir.persianweb.idmguide.utils
+package ir.solard.idm.utils
 
 import android.content.Context
 import android.content.SharedPreferences

@@ -1,9 +1,9 @@
-package ir.persianweb.idmguide.data.repository
+package ir.solard.idm.data.repository
 
 import android.content.Context
 import com.google.gson.Gson
-import ir.persianweb.idmguide.data.model.AppData
-import ir.persianweb.idmguide.data.model.TopicItem
+import ir.solard.idm.data.model.AppData
+import ir.solard.idm.data.model.TopicItem
 import java.io.InputStreamReader
 
 class ContentRepository(private val context: Context) {

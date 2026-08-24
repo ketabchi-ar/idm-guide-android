@@ -1,4 +1,4 @@
-package ir.persianweb.idmguide.ui
+package ir.solard.idm.ui
 
 import android.content.Intent
 import android.net.Uri
@@ -11,15 +11,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import ir.persianweb.idmguide.R
-import ir.persianweb.idmguide.ads.AdManager
-import ir.persianweb.idmguide.data.model.TopicItem
-import ir.persianweb.idmguide.data.repository.ContentRepository
-import ir.persianweb.idmguide.databinding.ActivityMainBinding
-import ir.persianweb.idmguide.ui.adapter.TopicAdapter
-import ir.persianweb.idmguide.ui.bookmarks.BookmarksActivity
-import ir.persianweb.idmguide.ui.detail.DetailActivity
-import ir.persianweb.idmguide.ui.settings.SettingsActivity
+import ir.solard.idm.R
+import ir.solard.idm.ads.AdManager
+import ir.solard.idm.data.model.TopicItem
+import ir.solard.idm.data.repository.ContentRepository
+import ir.solard.idm.databinding.ActivityMainBinding
+import ir.solard.idm.ui.adapter.TopicAdapter
+import ir.solard.idm.ui.bookmarks.BookmarksActivity
+import ir.solard.idm.ui.detail.DetailActivity
+import ir.solard.idm.ui.settings.SettingsActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity() {
                         action = Intent.ACTION_SEND
                         putExtra(
                             Intent.EXTRA_TEXT,
-                            "دانلود برنامه راهنمای جامع اینترنت دانلود منیجر IDM از کافه بازار:\nhttps://cafebazaar.ir/app/ir.persianweb.idmguide"
+                            "دانلود برنامه راهنمای جامع اینترنت دانلود منیجر IDM از کافه بازار:\nhttps://cafebazaar.ir/app/ir.solard.idm"
                         )
                         type = "text/plain"
                     }

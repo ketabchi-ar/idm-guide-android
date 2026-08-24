@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "ir.persianweb.idmguide"
+    namespace = "ir.solard.idm"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "ir.persianweb.idmguide"
+        applicationId = "ir.solard.idm"
         minSdk = 24
         targetSdk = 35
         versionCode = 2

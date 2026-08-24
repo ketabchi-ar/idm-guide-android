@@ -3,4 +3,4 @@
 -keepclassmembers class * {
     @com.google.gson.annotations.SerializedName <fields>;
 }
--keep class ir.persianweb.idmguide.data.model.** { *; }
+-keep class ir.solard.idm.data.model.** { *; }

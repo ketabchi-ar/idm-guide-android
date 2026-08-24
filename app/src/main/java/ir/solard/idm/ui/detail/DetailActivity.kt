@@ -1,4 +1,4 @@
-package ir.persianweb.idmguide.ui.detail
+package ir.solard.idm.ui.detail
 
 import android.content.Intent
 import android.net.Uri
@@ -8,13 +8,13 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import ir.persianweb.idmguide.R
-import ir.persianweb.idmguide.ads.AdManager
-import ir.persianweb.idmguide.data.model.TopicItem
-import ir.persianweb.idmguide.databinding.ActivityDetailBinding
-import ir.persianweb.idmguide.ui.adapter.StepAdapter
-import ir.persianweb.idmguide.ui.adapter.TopicAdapter
-import ir.persianweb.idmguide.utils.PreferencesManager
+import ir.solard.idm.R
+import ir.solard.idm.ads.AdManager
+import ir.solard.idm.data.model.TopicItem
+import ir.solard.idm.databinding.ActivityDetailBinding
+import ir.solard.idm.ui.adapter.StepAdapter
+import ir.solard.idm.ui.adapter.TopicAdapter
+import ir.solard.idm.utils.PreferencesManager
 
 class DetailActivity : AppCompatActivity() {
 
@@ -64,7 +64,7 @@ class DetailActivity : AppCompatActivity() {
                         title = sub.title,
                         backColorOrImg = sub.backColorOrImg,
                         type = sub.type,
-                        contentPayload = ir.persianweb.idmguide.data.model.ContentPayload(
+                        contentPayload = ir.solard.idm.data.model.ContentPayload(
                             pages = sub.payload?.pages,
                             url = sub.payload?.url,
                             mediaType = sub.payload?.mediaType

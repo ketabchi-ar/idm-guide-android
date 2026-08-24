@@ -1,12 +1,12 @@
-package ir.persianweb.idmguide.ui.adapter
+package ir.solard.idm.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import ir.persianweb.idmguide.R
-import ir.persianweb.idmguide.data.model.TopicItem
-import ir.persianweb.idmguide.databinding.ItemTopicCardBinding
+import ir.solard.idm.R
+import ir.solard.idm.data.model.TopicItem
+import ir.solard.idm.databinding.ItemTopicCardBinding
 
 class TopicAdapter(
     private var items: List<TopicItem>,

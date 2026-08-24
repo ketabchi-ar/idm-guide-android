@@ -1,15 +1,15 @@
-package ir.persianweb.idmguide.ui.bookmarks
+package ir.solard.idm.ui.bookmarks
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import ir.persianweb.idmguide.data.repository.ContentRepository
-import ir.persianweb.idmguide.databinding.ActivityBookmarksBinding
-import ir.persianweb.idmguide.ui.adapter.TopicAdapter
-import ir.persianweb.idmguide.ui.detail.DetailActivity
-import ir.persianweb.idmguide.utils.PreferencesManager
+import ir.solard.idm.data.repository.ContentRepository
+import ir.solard.idm.databinding.ActivityBookmarksBinding
+import ir.solard.idm.ui.adapter.TopicAdapter
+import ir.solard.idm.ui.detail.DetailActivity
+import ir.solard.idm.utils.PreferencesManager
 
 class BookmarksActivity : AppCompatActivity() {
 

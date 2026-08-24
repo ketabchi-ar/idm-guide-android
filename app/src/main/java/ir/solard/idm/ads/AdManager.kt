@@ -1,4 +1,4 @@
-package ir.persianweb.idmguide.ads
+package ir.solard.idm.ads
 
 import android.app.Activity
 import android.content.Context

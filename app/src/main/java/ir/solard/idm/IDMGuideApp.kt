@@ -1,9 +1,9 @@
-package ir.persianweb.idmguide
+package ir.solard.idm
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
-import ir.persianweb.idmguide.ads.AdManager
-import ir.persianweb.idmguide.utils.PreferencesManager
+import ir.solard.idm.ads.AdManager
+import ir.solard.idm.utils.PreferencesManager
 
 class IDMGuideApp : Application() {
 
