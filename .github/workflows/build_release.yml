@@ -4,7 +4,12 @@ on:
   push:
     tags:
       - "v*"
+    branches:
+      - main
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -29,7 +34,6 @@ jobs:
 
       - name: Build Debug & Release APK
         run: |
-          chmod +x ./gradlew || true
           gradle assembleDebug assembleRelease --stacktrace
 
       - name: Upload APK Artifacts
@@ -48,9 +52,9 @@ jobs:
           name: Release ${{ github.ref_name }}
           body: |
             🚀 **راهنمای جامع IDM - نسخه بازطراحی شده**
-            - بازنویسی به Kotlin و هدف‌گذاری Android 15 (SDK 35)
+            - بازنویسی کامل به Kotlin و هدف‌گذاری Android 15 (SDK 35)
             - طراحی مدرن بر پایه Material Design 3
-            - پشتیبانی از حالت شب (Dark Mode)
-            - یکپارچه‌سازی با سرویس تبلیغات تپسل برای کافه بازار
+            - پشتیبانی از حالت شب (Dark Mode) و RTL کامل
+            - یکپارچه‌سازی با سیستم تبلیغات تپسل برای کافه بازار
           draft: false
           prerelease: false
