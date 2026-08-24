@@ -1,0 +1,56 @@
+name: Build & Release APK
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Build Debug & Release APK
+        run: |
+          chmod +x ./gradlew || true
+          gradle assembleDebug assembleRelease --stacktrace
+
+      - name: Upload APK Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: idm-guide-apks
+          path: app/build/outputs/apk/**/*.apk
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, "refs/tags/")
+        with:
+          files: |
+            app/build/outputs/apk/debug/*.apk
+            app/build/outputs/apk/release/*.apk
+          name: Release ${{ github.ref_name }}
+          body: |
+            🚀 **راهنمای جامع IDM - نسخه بازطراحی شده**
+            - بازنویسی به Kotlin و هدف‌گذاری Android 15 (SDK 35)
+            - طراحی مدرن بر پایه Material Design 3
+            - پشتیبانی از حالت شب (Dark Mode)
+            - یکپارچه‌سازی با سرویس تبلیغات تپسل برای کافه بازار
+          draft: false
+          prerelease: false
