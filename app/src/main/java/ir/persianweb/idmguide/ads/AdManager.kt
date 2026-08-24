@@ -7,16 +7,16 @@ import android.view.ViewGroup
 import ir.tapsell.plus.AdRequestCallback
 import ir.tapsell.plus.AdShowListener
 import ir.tapsell.plus.TapsellPlus
+import ir.tapsell.plus.TapsellPlusBannerType
 import ir.tapsell.plus.TapsellPlusInitListener
 import ir.tapsell.plus.model.AdNetworkError
 import ir.tapsell.plus.model.AdNetworks
 import ir.tapsell.plus.model.TapsellPlusAdModel
+import ir.tapsell.plus.model.TapsellPlusErrorModel
 
 object AdManager {
     private const val TAG = "AdManager"
 
-    // کلیدهای تپسل پلاس (می‌توانید کلیدهای پنل تپسل خود را اینجا قرار دهید)
-    // برای تست می‌توان از کلیدهای دمو تپسل استفاده کرد
     const val TAPSELL_KEY = "dummy_tapsell_app_key"
     const val ZONE_ID_BANNER = "dummy_zone_standard_banner"
     const val ZONE_ID_INTERSTITIAL = "dummy_zone_interstitial"
@@ -41,15 +41,12 @@ object AdManager {
         }
     }
 
-    /**
-     * درخواست و نمایش بنر استاندارد در پایین صفحه
-     */
     fun showStandardBanner(activity: Activity, container: ViewGroup) {
         try {
             TapsellPlus.requestStandardBannerAd(
                 activity,
                 ZONE_ID_BANNER,
-                ir.tapsell.plus.model.TapsellPlusBannerType.BANNER_320_50,
+                TapsellPlusBannerType.BANNER_320_50,
                 object : AdRequestCallback() {
                     override fun response(tapsellPlusAdModel: TapsellPlusAdModel) {
                         super.response(tapsellPlusAdModel)
@@ -63,7 +60,7 @@ object AdManager {
                                     Log.d(TAG, "Banner Opened")
                                 }
 
-                                override fun onError(tapsellPlusErrorModel: ir.tapsell.plus.model.TapsellPlusErrorModel) {
+                                override fun onError(tapsellPlusErrorModel: TapsellPlusErrorModel) {
                                     super.onError(tapsellPlusErrorModel)
                                     Log.e(TAG, "Banner Show Error: ${tapsellPlusErrorModel.errorMessage}")
                                 }
@@ -82,9 +79,6 @@ object AdManager {
         }
     }
 
-    /**
-     * درخواست و نمایش تبلیغ تمام‌صفحه بین‌برنامه‌ای (Interstitial)
-     */
     fun showInterstitialAd(activity: Activity, onAdClosed: (() -> Unit)? = null) {
         try {
             TapsellPlus.requestInterstitialAd(
@@ -102,7 +96,7 @@ object AdManager {
                                     onAdClosed?.invoke()
                                 }
 
-                                override fun onError(tapsellPlusErrorModel: ir.tapsell.plus.model.TapsellPlusErrorModel) {
+                                override fun onError(tapsellPlusErrorModel: TapsellPlusErrorModel) {
                                     super.onError(tapsellPlusErrorModel)
                                     onAdClosed?.invoke()
                                 }

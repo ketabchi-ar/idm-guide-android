@@ -58,7 +58,6 @@ class MainActivity : AppCompatActivity() {
     private fun handleTopicClick(topic: TopicItem) {
         when (topic.type) {
             "showForm", "showList" -> {
-                // Show Interstitial ad occasionally when navigating
                 AdManager.showInterstitialAd(this) {
                     val intent = Intent(this, DetailActivity::class.java).apply {
                         putExtra(DetailActivity.EXTRA_TOPIC, topic)
@@ -107,7 +106,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.nav_rate -> {
                     try {
-                        val intent = Intent(Intent.ACTION_EDIT).apply {
+                        val intent = Intent(Intent.ACTION_VIEW).apply {
                             data = Uri.parse(getString(R.string.bazaar_package_url))
                             setPackage("com.farsitel.bazaar")
                         }
@@ -122,8 +121,7 @@ class MainActivity : AppCompatActivity() {
                         action = Intent.ACTION_SEND
                         putExtra(
                             Intent.EXTRA_TEXT,
-                            "دانلود برنامه راهنمای جامع اینترنت دانلود منیجر IDM از کافه بازار:
-https://cafebazaar.ir/app/ir.persianweb.idmguide"
+                            "دانلود برنامه راهنمای جامع اینترنت دانلود منیجر IDM از کافه بازار:\nhttps://cafebazaar.ir/app/ir.persianweb.idmguide"
                         )
                         type = "text/plain"
                     }
@@ -156,7 +154,6 @@ https://cafebazaar.ir/app/ir.persianweb.idmguide"
     }
 
     private fun setupAds() {
-        // Show Standard Banner at bottom of Home Screen
         AdManager.showStandardBanner(this, binding.bannerAdContainer)
     }
 
