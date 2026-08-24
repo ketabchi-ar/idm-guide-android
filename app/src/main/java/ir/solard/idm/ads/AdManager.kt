@@ -25,6 +25,10 @@ object AdManager {
 
     fun initialize(context: Context) {
         try {
+            if (TAPSELL_KEY == "dummy_tapsell_app_key") {
+                Log.d(TAG, "Using dummy tapsell key, skipping remote init")
+                return
+            }
             TapsellPlus.initialize(context, TAPSELL_KEY, object : TapsellPlusInitListener {
                 override fun onInitializeSuccess(adNetworks: AdNetworks) {
                     Log.d(TAG, "Tapsell initialized successfully")
@@ -42,6 +46,7 @@ object AdManager {
     }
 
     fun showStandardBanner(activity: Activity, container: ViewGroup) {
+        if (!isInitialized) return
         try {
             TapsellPlus.requestStandardBannerAd(
                 activity,
@@ -80,6 +85,10 @@ object AdManager {
     }
 
     fun showInterstitialAd(activity: Activity, onAdClosed: (() -> Unit)? = null) {
+        if (!isInitialized) {
+            onAdClosed?.invoke()
+            return
+        }
         try {
             TapsellPlus.requestInterstitialAd(
                 activity,
